@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Your Cart - Homemade Pickles & Snacks</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #fef6e4;
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+  }
+  h1 {
+    color: #e65100;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  th, td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: center;
+  }
+  th {
+    background-color: #ff6600;
+    color: white;
+    text-transform: uppercase;
+  }
+  button {
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+  button:hover {
+    background-color: #cc5200;
+  }
+  input[type=number] {
+    width: 60px;
+    padding: 5px;
+  }
+  .total {
+    text-align: right;
+    font-size: 18px;
+    margin-top: 15px;
+    font-weight: 700;
+  }
+  .empty-msg {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 20px;
+    color: #bf360c;
+  }
+  .actions {
+    margin-top: 20px;
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+
+<h1>Your Cart</h1>
+
+<div id="cart-container"></div>
+
+<script>
+  // Load cart from localStorage
+  function loadCart() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const container = document.getElementById('cart-container');
+    container.innerHTML = ''; // clear previous
+
+    if (cart.length === 0) {
+      container.innerHTML = '<p class="empty-msg">Your cart is empty.</p>';
+      return;
+    }
+
+    // Create table for cart items
+    const table = document.createElement('table');
+    table.innerHTML = `
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Price (₹)</th>
+          <th>Quantity</th>
+          <th>Subtotal (₹)</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    `;
+
+    const tbody = table.querySelector('tbody');
+    let total = 0;
+
+    cart.forEach((item, index) => {
+      const subtotal = item.price * item.quantity;
+      total += subtotal;
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${item.name}</td>
+        <td>${item.price.toFixed(2)}</td>
+        <td><input type="number" min="1" value="${item.quantity}" data-index="${index}" class="qty-input" /></td>
+        <td>${subtotal.toFixed(2)}</td>
+        <td><button data-index="${index}" class="remove-btn">Remove</button></td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    container.appendChild(table);
+
+    // Show total and proceed button
+    const actionsDiv = document.createElement('div');
+    actionsDiv.className = 'actions';
+    actionsDiv.innerHTML = `
+      <div class="total">Total: ₹${total.toFixed(2)}</div>
+      <button id="proceed-pay">Proceed to Pay</button>
+    `;
+    container.appendChild(actionsDiv);
+
+    // Add event listeners for quantity change
+    const qtyInputs = container.querySelectorAll('.qty-input');
+    qtyInputs.forEach(input => {
+      input.addEventListener('change', (e) => {
+        const idx = e.target.getAttribute('data-index');
+        let val = parseInt(e.target.value);
+        if (isNaN(val) || val < 1) val = 1;
+        e.target.value = val;
+
+        cart[idx].quantity = val;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        loadCart(); // refresh cart
+      });
+    });
+
+    // Add event listeners for remove buttons
+    const removeButtons = container.querySelectorAll('.remove-btn');
+    removeButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = e.target.getAttribute('data-index');
+        cart.splice(idx, 1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        loadCart(); // refresh cart
+      });
+    });
+
+    // Proceed to pay button click
+    document.getElementById('proceed-pay').addEventListener('click', () => {
+      alert('Thank you for your purchase! Payment gateway integration can go here.');
+      // Clear cart after payment for demo:
+      localStorage.removeItem('cart');
+      loadCart();
+    });
+  }
+
+  // Initialize
+  loadCart();
+</script>
+
+</body>
+</html>
