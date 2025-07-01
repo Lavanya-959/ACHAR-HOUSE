@@ -1,0 +1,37 @@
+<!-- templates/index.html -->
+    {% extends "layout.html" %}
+    
+    {% block content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <section class="landing">
+        <div class="landing-content">
+            <h1>Welcome to Homemade Pickles & Snacks</h1>
+            <p>Discover authentic flavors made with traditional recipes</p>
+            <div class="landing-buttons">
+                <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a>
+                <a href="{{ url_for('signup') }}" class="btn btn-secondary">Sign Up</a>
+            </div>
+        </div>
+        <div class="landing-image">
+            <img src="{{ url_for('static', filename='images/background_img.jpg') }}" alt="spicy_table">
+        </div>
+    </section>
+    
+    <section class="features">
+        <div class="feature-card">
+            <i class="fas fa-leaf"></i>
+            <h3>100% Natural</h3>
+            <p>No preservatives or artificial ingredients</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-clock"></i>
+            <h3>Traditional Recipes</h3>
+            <p>Prepared using time-tested methods</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-truck"></i>
+            <h3>Fast Delivery</h3>
+            <p>Shipped within 24 hours</p>
+        </div>
+    </section>
+    {% endblock %}

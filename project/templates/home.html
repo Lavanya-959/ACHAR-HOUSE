@@ -1,0 +1,58 @@
+<!-- templates/home.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+<rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<section class="hero">
+    <div class="hero-content">
+        <h1>Authentic Homemade Pickles & Snacks</h1>
+        <p>Made with traditional recipes and the finest ingredients</p>
+        <div class="cta-buttons">
+            <a href="#featured" class="btn">Shop Now</a>
+            <a href="{{ url_for('about_us') }}" class="btn btn-outline">Learn More</a>
+        </div>
+    </div>
+</section>
+
+<section id="featured" class="featured-products">
+    <h2>Featured Products</h2>
+    <div class="product-grid">
+        {% for product in non_veg_pickles %}
+        <div class="product-card">
+            <img src="{{ url_for('static', filename='images/products/' + product.name|lower|replace(' ', '-') + '.jpg') }}"
+                alt="{{ product.name }}">
+            <div class="product-details">
+                <h3>{{ product.name }}</h3>
+                <p>From ₹{{ product.weights['250'] }}</p>
+                <a href="{{ url_for('non_veg_pickles') }}" class="btn">View Options</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="categories">
+    <h2>Our Categories</h2>
+    <div class="category-grid">
+        <a href="{{ url_for('non_veg_pickles') }}" class="category-card">
+            <img src="{{ url_for('static', filename='images/non_veg_pickles.jpg') }}" alt="Non-Veg Pickles">
+            <div class="category-overlay">
+                <h3>Non-Veg Pickles</h3>
+            </div>
+        </a>
+        <a href="{{ url_for('veg_pickles') }}" class="category-card">
+            <img src="{{ url_for('static', filename='images/veg pickles.jpg') }}" alt="Veg Pickles">
+            <div class="category-overlay">
+                <h3>Veg Pickles</h3>
+            </div>
+        </a>
+        <a href="{{ url_for('snacks') }}" class="category-card">
+            <img src="{{ url_for('static', filename='images/snacks.jpg') }}" alt="Snacks">
+            <div class="category-overlay">
+                <h3>Snacks</h3>
+            </div>
+        </a>
+    </div>
+</section>
+{% endblock %}

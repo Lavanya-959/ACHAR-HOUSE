@@ -1,0 +1,25 @@
+<!-- templates/cart.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+<section class="cart-section">
+  <h1>Your Shopping Cart</h1>
+
+  <div id="cart-container">
+    <!-- Cart items will be loaded here via JavaScript -->
+    <p class="empty-cart-message">Your cart is empty. Start shopping now!</p>
+  </div>
+
+  <div class="cart-actions">
+    <a href="{{ url_for('home') }}" class="btn btn-outline">Continue Shopping</a>
+    <a href="{{ url_for('checkout') }}" class="btn" id="checkout-btn">Proceed to Checkout</a>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+{% endblock %}

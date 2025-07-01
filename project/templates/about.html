@@ -1,0 +1,19 @@
+<!-- templates/about.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<section class="about-section">
+    <h1>About Achar House</h1>
+    <div class="about-content">
+        <img src="{{ url_for('static', filename='images/snacks.jpg') }}" alt="About Achar House">
+        <div class="about-text">
+            <h2>Our Story</h2>
+            <p>Our mission is to bring you traditional, authentic homemade pickles and snacks crafted with love and
+                care. Every bite reflects our passion for quality and flavor passed down through generations.</p>
+            <p>Founded in 2010, Achar House started as a small family business and has grown to become a trusted name in
+                authentic Indian pickles and snacks.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

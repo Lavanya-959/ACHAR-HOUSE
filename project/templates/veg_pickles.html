@@ -1,0 +1,50 @@
+<!-- templates/veg_pickles.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}">
+<section class="product-header">
+    <h1>Vegetarian Pickles</h1>
+    <p>Traditional recipes with authentic flavors</p>
+</section>
+
+<section class="product-list">
+    {% for product in products %}
+    <div class="product-card">
+        <div class="product-image">
+            <img src="{{ url_for('static', filename='images/veg_pickles/' + product.name|lower|replace(' ', '-') + '.jpg') }}"
+                alt="{{ product.name }}" loading="lazy">
+            {% if loop.index <= 2 %}<span class="product-badge">New</span>{% endif %}
+        </div>
+        <div class="product-details">
+            <h3>{{ product.name }}</h3>
+            <div class="price-options">
+                {% for weight, price in product.weights.items() %}
+                <div class="price-option">
+                    <input type="radio" id="weight-{{ product.id }}-{{ weight }}" name="weight-{{ product.id }}"
+                        value="{{ weight }}" data-price="{{ price }}" {% if loop.first %}checked{% endif %}>
+                    <label for="weight-{{ product.id }}-{{ weight }}">{{ weight }}g - ₹{{ price }}</label>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="product-actions">
+                <div class="quantity-selector">
+                    <button class="qty-btn minus">-</button>
+                    <input type="number" value="1" min="1" class="qty-input">
+                    <button class="qty-btn plus">+</button>
+                </div>
+                <button class="btn add-to-cart" data-product-id="{{ product.id }}"
+                    data-product-name="{{ product.name }}">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+{% endblock %}
