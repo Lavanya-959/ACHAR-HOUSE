@@ -34,7 +34,8 @@ orders_table = dynamodb.Table(os.environ.get('ORDERS_TABLE', 'Orders'))
 SNS_TOPIC_ARN = os.environ.get('SNS_TOPIC_ARN')
 ENABLE_SNS = os.environ.get('ENABLE_SNS', 'False').lower() == 'true'
 
-
+EMAIL_ADDRESS = 'lavanyap.csd@gmail.com'
+EMAIL_PASSWORD = 'admin@123'
 # Add testing endpoints (remove in production)
 @app.route('/test/sns')
 def test_sns():
