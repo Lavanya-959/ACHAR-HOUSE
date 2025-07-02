@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Authentic Homemade Pickles & Snacks</h1>
+        <p>Made with traditional recipes and the finest ingredients passed down through generations</p>
+        <div class="cta-buttons">
+            <a href="#featured" class="btn btn-primary">Shop Now</a>
+            <a href="{{ url_for('about_us') }}" class="btn btn-outline">Our Story</a>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products -->
+<section id="featured" class="featured-products">
+    <div class="container">
+        <h2>Customer Favorites</h2>
+        <div class="product-grid">
+            {% for product in non_veg_pickles[:4] %}
+            
+            <div class="product-card">
+                <img src="{{ url_for('static', filename='images/non_veg_pickles/' + product.name|lower|replace(' ', '-') + '.jpg') }}"
+                    alt="{{ product.name }}" loading="lazy">
+                <div class="product-details">
+                    <h3>{{ product.name }}</h3>
+                    <p>From ₹{{ product.weights['250'] }}</p>
+                    <a href="{{ url_for('non_veg_pickles') }}" class="btn btn-sm">View Options</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Categories -->
+<section class="categories">
+    <div class="container">
+        <h2>Explore Our Collections</h2>
+        <div class="category-grid">
+            <a href="{{ url_for('non_veg_pickles') }}" class="category-card">
+                <img src="{{ url_for('static', filename='images/non-veg-pickles.jpg') }}" alt="Non-Veg Pickles" loading="lazy">
+                <div class="category-overlay">
+                    <h3>Non-Veg Pickles</h3>
+                    <p>8 varieties available</p>
+                </div>
+            </a>
+            <a href="{{ url_for('veg_pickles') }}" class="category-card">
+                <img src="{{ url_for('static', filename='images/veg-pickles.jpg') }}" alt="Veg Pickles" loading="lazy">
+                <div class="category-overlay">
+                    <h3>Veg Pickles</h3>
+                    <p>12 varieties available</p>
+                </div>
+            </a>
+            <a href="{{ url_for('snacks') }}" class="category-card">
+                <img src="{{ url_for('static', filename='images/snacks.jpg') }}" alt="Traditional Snacks" loading="lazy">
+                <div class="category-overlay">
+                    <h3>Traditional Snacks</h3>
+                    <p>10 varieties available</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section (Optional) -->
+<section class="testimonials">
+    <div class="container">
+        <h2>What Our Customers Say</h2>
+        <div class="testimonial-grid">
+            <!-- Testimonial cards would go here -->
+        </div>
+    </div>
+</section>
+{% endblock %}
