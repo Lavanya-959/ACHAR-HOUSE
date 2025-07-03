@@ -22,7 +22,7 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', os.urandom(24))
 
 # AWS Configuration
-AWS_REGION = os.environ.get('AWS_REGION', 'ap-south-1')
+AWS_REGION = os.environ.get('AWS_REGION', 'us-east-1')
 
 dynamodb = boto3.resource('dynamodb', region_name=AWS_REGION)
 sns_client = boto3.client('sns', region_name=AWS_REGION)
